@@ -141,6 +141,8 @@ body {
     overflow-y: auto;
     padding-right: 0.3rem;
     flex: 1;
+    overflow-y:auto;
+padding-right:8px;
 }
 
 /* Scrollbar Styles */
@@ -223,6 +225,8 @@ body {
     min-height: 0;
     height: 100%;
     /* overflow: hidden; */
+    overflow-y:auto;
+padding-right:2px;
 }
 
 .canvas.drag-over {
@@ -359,6 +363,9 @@ body {
     min-height: 0;
     height: 100%;
     /* overflow: hidden; */
+    
+overflow-y:auto;
+padding-right:8px;
 }
 
 #propertyEditor {
@@ -780,4 +787,13 @@ footer {
 outline:2px solid #4f46e5;
 border-radius:6px;
 padding:4px;
+}
+
+.right-panel::-webkit-scrollbar{
+width:6px;
+}
+
+.right-panel::-webkit-scrollbar-thumb{
+background:#ccc;
+border-radius:10px;
 }

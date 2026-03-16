@@ -1,153 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Builder · Professional Edition</title>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Our CSS -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Builder · Professional Edition</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Our CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <header class="app-header">
-        <div class="logo">
-            <i class="fas fa-cubes"></i>
-            <h1>Portfolio Builder</h1>
+  <header class="app-header">
+    <div class="logo">
+      <i class="fas fa-cubes"></i>
+      <h1>Portfolio Builder</h1>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <!-- History buttons -->
+      <div class="history-indicator">
+        <button class="history-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
+          <i class="fas fa-undo-alt"></i>
+        </button>
+        <button class="history-btn" id="redoBtn" title="Redo (Ctrl+Y)" disabled>
+          <i class="fas fa-redo-alt"></i>
+        </button>
+      </div>
+
+      <!-- Auto-save indicator -->
+      <div class="auto-save-indicator" id="autoSaveIndicator">
+        <span class="auto-save-dot"></span>
+        <span id="autoSaveText">Auto-saving</span>
+      </div>
+
+      <!-- Toolbar buttons -->
+      <div class="toolbar">
+        <button id="saveBtn" class="btn"><i class="fas fa-save"></i> Save</button>
+        <button id="loadBtn" class="btn"><i class="fas fa-folder-open"></i> Load</button>
+        <button id="clearBtn" class="btn"><i class="fas fa-trash-alt"></i> Clear</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="builder">
+    <!-- LEFT PANEL - Components Library -->
+    <aside class="panel left-panel">
+      <h3><i class="fas fa-puzzle-piece"></i> Components</h3>
+      <div class="components-list">
+        <div class="component" draggable="true" data-type="header">
+          <i class="fas fa-heading"></i>
+          <span>Header</span>
         </div>
-        
-        <div style="display: flex; align-items: center; gap: 1rem;">
-            <!-- History buttons -->
-            <div class="history-indicator">
-                <button class="history-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
-                    <i class="fas fa-undo-alt"></i>
-                </button>
-                <button class="history-btn" id="redoBtn" title="Redo (Ctrl+Y)" disabled>
-                    <i class="fas fa-redo-alt"></i>
-                </button>
-            </div>
-
-            <!-- Auto-save indicator -->
-            <div class="auto-save-indicator" id="autoSaveIndicator">
-                <span class="auto-save-dot"></span>
-                <span id="autoSaveText">Auto-saving</span>
-            </div>
-
-            <!-- Toolbar buttons -->
-            <div class="toolbar">
-                <button id="saveBtn" class="btn"><i class="fas fa-save"></i> Save</button>
-                <button id="loadBtn" class="btn"><i class="fas fa-folder-open"></i> Load</button>
-                <button id="clearBtn" class="btn"><i class="fas fa-trash-alt"></i> Clear</button>
-            </div>
+        <div class="component" draggable="true" data-type="paragraph">
+          <i class="fas fa-paragraph"></i>
+          <span>Paragraph</span>
         </div>
-    </header>
+        <div class="component" draggable="true" data-type="image">
+          <i class="fas fa-image"></i>
+          <span>Image</span>
+        </div>
+        <!-- Day 3 - New Components -->
+        <div class="component" draggable="true" data-type="skill">
+          <i class="fas fa-chart-bar"></i>
+          <span>Skill Bar</span>
+        </div>
+        <div class="component" draggable="true" data-type="contact">
+          <i class="fas fa-address-card"></i>
+          <span>Contact Info</span>
+        </div>
+      </div>
+      <p class="hint"><i class="fas fa-arrows-alt"></i> Drag components to canvas</p>
+    </aside>
 
-    <main class="builder">
-        <!-- LEFT PANEL - Components Library -->
-        <aside class="panel left-panel">
-            <h3><i class="fas fa-puzzle-piece"></i> Components</h3>
-            <div class="components-list">
-                <div class="component" draggable="true" data-type="header">
-                    <i class="fas fa-heading"></i>
-                    <span>Header</span>
-                </div>
-                <div class="component" draggable="true" data-type="paragraph">
-                    <i class="fas fa-paragraph"></i>
-                    <span>Paragraph</span>
-                </div>
-                <div class="component" draggable="true" data-type="image">
-                    <i class="fas fa-image"></i>
-                    <span>Image</span>
-                </div>
-                <!-- Day 3 - New Components -->
-                <div class="component" draggable="true" data-type="skill">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Skill Bar</span>
-                </div>
-                <div class="component" draggable="true" data-type="contact">
-                    <i class="fas fa-address-card"></i>
-                    <span>Contact Info</span>
-                </div>
-            </div>
-            <p class="hint"><i class="fas fa-arrows-alt"></i> Drag components to canvas</p>
-        </aside>
+    <!-- CENTER PANEL - Canvas -->
+    <section class="canvas">
+      <div class="canvas-header">
+        <span style="font-weight:500;"><i class="far fa-eye"></i> Canvas</span>
+        <div class="preview-toggles" id="previewToggles">
+          <button class="preview-btn active" data-view="desktop">
+            <i class="fas fa-desktop"></i> Desktop
+          </button>
+          <button class="preview-btn" data-view="tablet">
+            <i class="fas fa-tablet-alt"></i> Tablet
+          </button>
+          <button class="preview-btn" data-view="mobile">
+            <i class="fas fa-mobile-alt"></i> Mobile
+          </button>
+        </div>
+      </div>
+      <div id="canvasContainer" class="preview-desktop">
+        <!-- Canvas content will be rendered here by JavaScript -->
+      </div>
+    </section>
 
-        <!-- CENTER PANEL - Canvas -->
-        <section class="canvas">
-            <div class="canvas-header">
-                <span style="font-weight:500;"><i class="far fa-eye"></i> Canvas</span>
-                <div class="preview-toggles" id="previewToggles">
-                    <button class="preview-btn active" data-view="desktop">
-                        <i class="fas fa-desktop"></i> Desktop
-                    </button>
-                    <button class="preview-btn" data-view="tablet">
-                        <i class="fas fa-tablet-alt"></i> Tablet
-                    </button>
-                    <button class="preview-btn" data-view="mobile">
-                        <i class="fas fa-mobile-alt"></i> Mobile
-                    </button>
-                </div>
-            </div>
-            <div id="canvasContainer" class="preview-desktop">
-                <!-- Canvas content will be rendered here by JavaScript -->
-            </div>
-        </section>
+    <!-- RIGHT PANEL - Properties -->
+    <aside class="panel right-panel" id="propertyPanel">
+      <h3><i class="fas fa-sliders-h"></i> Properties</h3>
+      <div id="propertyEditor">
+        <div class="properties-placeholder">
+          <i class="fas fa-mouse-pointer"></i>
+          <p>Select a component to edit</p>
+          <p class="small">Click on any item in canvas</p>
+        </div>
+      </div>
 
-        <!-- RIGHT PANEL - Properties -->
-        <aside class="panel right-panel" id="propertyPanel">
-            <h3><i class="fas fa-sliders-h"></i> Properties</h3>
-            <div id="propertyEditor">
-                <div class="properties-placeholder">
-                    <i class="fas fa-mouse-pointer"></i>
-                    <p>Select a component to edit</p>
-                    <p class="small">Click on any item in canvas</p>
-                </div>
-            </div>
-            
-            <!-- Keyboard Shortcuts Hint -->
-            <div class="shortcuts-hint">
-                <p><i class="fas fa-keyboard"></i> <strong>Shortcuts:</strong></p>
-                <p><kbd>Del</kbd> Delete selected</p>
-                <p><kbd>Ctrl</kbd> + <kbd>D</kbd> Duplicate</p>
-                <p><kbd>Ctrl</kbd> + <kbd>Z</kbd> Undo</p>
-                <p><kbd>Ctrl</kbd> + <kbd>Y</kbd> Redo</p>
-                <p><kbd>↑</kbd> <kbd>↓</kbd> Move up/down</p>
-            </div>
+      <!-- Keyboard Shortcuts Hint -->
+      <div class="shortcuts-hint">
+        <p><i class="fas fa-keyboard"></i> <strong>Shortcuts:</strong></p>
+        <p><kbd>Del</kbd> Delete selected</p>
+        <p><kbd>Ctrl</kbd> + <kbd>D</kbd> Duplicate</p>
+        <p><kbd>Ctrl</kbd> + <kbd>Z</kbd> Undo</p>
+        <p><kbd>Ctrl</kbd> + <kbd>Y</kbd> Redo</p>
+        <p><kbd>↑</kbd> <kbd>↓</kbd> Move up/down</p>
+      </div>
 
-            <!-- Export Options -->
-            <div class="export-options">
-                <h3 style="margin-top:1rem;"><i class="fas fa-download"></i> Export</h3>
-                <button class="export-btn" id="exportHtmlBtn">
-                    <i class="fas fa-file-code"></i> Export as HTML
-                </button>
-                <button class="export-btn" id="exportWithImagesBtn">
-                    <i class="fas fa-images"></i> Export with Images
-                </button>
-            </div>
+      <!-- Export Options -->
+      <div class="export-options">
+        <h3 style="margin-top:1rem;"><i class="fas fa-download"></i> Export</h3>
+        <button class="export-btn" id="exportHtmlBtn">
+          <i class="fas fa-file-code"></i> Export as HTML
+        </button>
+        <button class="export-btn" id="exportWithImagesBtn">
+          <i class="fas fa-images"></i> Export with Images
+        </button>
+      </div>
 
-            <!-- Template Gallery -->
-            <div class="template-gallery">
-                <h3><i class="fas fa-palette"></i> Templates</h3>
-                <div class="template-card" id="templateCreative">
-                    <h4>🎨 Creative</h4>
-                    <p>For artists & designers</p>
-                </div>
-                <div class="template-card" id="templateTech">
-                    <h4>💻 Tech</h4>
-                    <p>For developers & engineers</p>
-                </div>
-                <div class="template-card" id="templateBusiness">
-                    <h4>📊 Business</h4>
-                    <p>For professionals</p>
-                </div>
-            </div>
-        </aside>
-    </main>
+      <!-- Template Gallery -->
+      <div class="template-gallery">
+        <h3><i class="fas fa-palette"></i> Templates</h3>
+        <div class="template-card" id="templateCreative">
+          <h4>🎨 Creative</h4>
+          <p>For artists & designers</p>
+        </div>
+        <div class="template-card" id="templateTech">
+          <h4>💻 Tech</h4>
+          <p>For developers & engineers</p>
+        </div>
+        <div class="template-card" id="templateBusiness">
+          <h4>📊 Business</h4>
+          <p>For professionals</p>
+        </div>
+      </div>
+    </aside>
+  </main>
 
-    <footer>
-        <p>Day 3: Drag & Drop + Properties + Export + Image Upload</p>
-    </footer>
+  <footer>
+    <p>Day 3: Drag & Drop + Properties + Export + Image Upload</p>
+  </footer>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
