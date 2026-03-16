@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Builder · Day 1</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo">
+            <i class="fas fa-cubes"></i>
+            <h1>Portfolio Builder</h1>
+        </div>
+        <div class="toolbar">
+            <button id="saveBtn" class="btn"><i class="fas fa-save"></i> Save</button>
+            <button id="loadBtn" class="btn"><i class="fas fa-folder-open"></i> Load</button>
+            <button id="clearBtn" class="btn"><i class="fas fa-trash-alt"></i> Clear</button>
+        </div>
+    </header>
+
+    <main class="builder">
+        <!-- LEFT PANEL - Components Library -->
+        <aside class="panel left-panel">
+            <h3><i class="fas fa-puzzle-piece"></i> Components</h3>
+            <div class="components-list">
+                <div class="component" draggable="true" data-type="header">
+                    <i class="fas fa-heading"></i>
+                    <span>Header</span>
+                </div>
+                <div class="component" draggable="true" data-type="paragraph">
+                    <i class="fas fa-paragraph"></i>
+                    <span>Paragraph</span>
+                </div>
+                <div class="component" draggable="true" data-type="image">
+                    <i class="fas fa-image"></i>
+                    <span>Image</span>
+                </div>
+            </div>
+            <p class="hint"><i class="fas fa-arrows-alt"></i> Drag components to canvas</p>
+        </aside>
+
+        <!-- CENTER PANEL - Canvas -->
+        <section class="canvas" id="canvas">
+            <div class="canvas-placeholder" id="placeholder">
+                <i class="fas fa-arrow-left"></i>
+                <p>Drag components here</p>
+            </div>
+        </section>
+
+        <!-- RIGHT PANEL - Properties (will be used in Day 2) -->
+        <aside class="panel right-panel">
+            <h3><i class="fas fa-sliders-h"></i> Properties</h3>
+            <div class="properties-placeholder">
+                <p>Select an item to edit</p>
+                <p class="small">(Coming in Day 2)</p>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <p>Day 1: Drag & Drop + Local Storage</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
