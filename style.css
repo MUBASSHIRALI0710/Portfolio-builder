@@ -104,7 +104,7 @@ body {
   flex: 1;
   min-height: 0;
   height: calc(100vh - 80px);
-
+    /* position: absolute; */
   overflow: hidden;
 }
 
@@ -120,6 +120,8 @@ body {
   min-height: 0vh;
   height: 100%;
   overflow: hidden;
+  /* overflow-y: auto; */
+  
 }
 
 .panel h3 {
@@ -558,13 +560,70 @@ body {
 
 .template-card p {
   font-size: 0.8rem;
-  color: #64748b;
+  color: #a0a3a8;
 }
+/* Active State - Jab template select ho */
+.template-card.active {
+    border-color: #2563eb;
+    background: #eef2ff;
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+}
+
+.template-card.active h4 {
+    color: #2563eb;
+}
+
+.template-card.active::before {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #2563eb;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Different colors for different templates */
+.template-card[data-template="creative"].active {
+    border-color: #7c3aed;
+    background: #f3e8ff;
+}
+
+.template-card[data-template="creative"].active h4 {
+    color: #7c3aed;
+}
+
+.template-card[data-template="tech"].active {
+    border-color: #059669;
+    background: #e6f7f0;
+}
+
+.template-card[data-template="tech"].active h4 {
+    color: #059669;
+}
+
+.template-card[data-template="business"].active {
+    border-color: #d97706;
+    background: #fef3c7;
+}
+
+.template-card[data-template="business"].active h4 {
+    color: #d97706;
+}
+
 
 /* ===== FOOTER WITH SHORTCUTS ===== */
 
 .app-footer {
-  background: white;
+  background: #1e293b;
   border-top: 1px solid #e2e8f0;
   margin-top: auto;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02);
@@ -580,7 +639,7 @@ body {
 }
 
 .footer-section h4 {
-  color: #1e293b;
+  color: white;
   font-size: 1rem;
   margin-bottom: 1.2rem;
   display: flex;
@@ -589,7 +648,7 @@ body {
 }
 
 .footer-section h4 i {
-  color: #2563eb;
+  color: #195ae6;
   font-size: 1.1rem;
 }
 
@@ -707,14 +766,14 @@ body {
 
 /* Footer Bottom */
 .footer-bottom {
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid  #e2e8f0;
   padding: 1rem 2rem;
   text-align: center;
-  background: #f8fafc;
+  background: #1e293b;
 }
 
 .footer-bottom p {
-  color: #64748b;
+  color: #f8fafc;
   font-size: 0.8rem;
   margin: 0;
 }
@@ -1001,3 +1060,208 @@ body {
     max-height: 300px;
   }
 }
+
+
+
+
+
+
+/* ===== FINAL POLISHING ===== */
+
+/* Smooth Transitions */
+* {
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* Better Hover Effects */
+.component:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.15);
+}
+
+.canvas-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* Loading Animation */
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.loading {
+    background: linear-gradient(90deg, #f0f4fa 25%, #e2e8f0 50%, #f0f4fa 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Empty States */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #94a3b8;
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.3;
+}
+
+.empty-state p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.empty-state .btn {
+    max-width: 200px;
+}
+
+/* Focus States for Accessibility */
+button:focus-visible,
+.component:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+}
+
+/* Tooltip Styles */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-5px);
+    background: #1e293b;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+[data-tooltip]:hover:before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+/* Success/Error Messages */
+.message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: slideIn 0.3s ease;
+}
+
+.message.success {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.message.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+.message.info {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #93c5fd;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse Animation for Auto-save */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+.auto-save-dot {
+    animation: pulse 2s infinite;
+}
+
+.auto-save-dot.saving {
+    animation: pulse 1s infinite;
+}
+
+/* Gradient Borders */
+.canvas-item.selected {
+    border: double 2px transparent;
+    background-image: linear-gradient(white, white), 
+                      linear-gradient(135deg, #2563eb, #7c3aed);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+/* Glassmorphism Effect */
+.panel {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Print Styles */
+@media print {
+    .app-header,
+    .left-panel,
+    .right-panel,
+    footer,
+    .item-controls,
+    .preview-toggles {
+        display: none !important;
+    }
+    
+    .builder {
+        display: block;
+        padding: 0;
+    }
+    
+    .canvas {
+        border: none;
+        padding: 0;
+    }
+    
+    .canvas-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border: 1px solid #ccc;
+    }
+}
+

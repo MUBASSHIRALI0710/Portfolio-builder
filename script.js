@@ -824,182 +824,439 @@ function exportAsHTML(includeImages = true) {
 }
 
 // ---------- TEMPLATES ----------
+// ---------- TEMPLATES WITH ACTIVE STATE ----------
 function loadCreativeTemplate() {
-  components = [
-    {
-      id: generateId(),
-      type: 'header',
-      content: 'Alex Rivera',
-      align: 'center',
-      color: '#7c3aed',
-      fontSize: 48,
-      level: '1'
-    },
-    {
-      id: generateId(),
-      type: 'paragraph',
-      content: 'Multimedia artist & creative coder',
-      align: 'center',
-      color: '#4b5563',
-      fontSize: 20
-    },
-    {
-      id: generateId(),
-      type: 'image',
-      content: 'https://picsum.photos/800/400?random=1',
-      caption: 'Interactive installation, 2024'
-    },
-    {
-      id: generateId(),
-      type: 'skill',
-      skills: [
-        { name: 'After Effects', percent: 85 },
-        { name: 'Processing', percent: 70 },
-        { name: 'TouchDesigner', percent: 60 }
-      ],
-      barColor: '#7c3aed'
-    }
-  ];
-  selectedIndex = -1;
-  renderCanvas();
-  pushToHistory();
-  saveToStorage();
-  showToast('Creative template loaded!');
+    components = [
+        {
+            id: generateId(),
+            type: 'header',
+            content: 'Alex Rivera',
+            align: 'center',
+            color: '#7c3aed',
+            fontSize: 48,
+            level: '1'
+        },
+        {
+            id: generateId(),
+            type: 'paragraph',
+            content: 'Multimedia artist & creative coder',
+            align: 'center',
+            color: '#4b5563',
+            fontSize: 20
+        },
+        {
+            id: generateId(),
+            type: 'image',
+            content: 'https://picsum.photos/800/400?random=1',
+            caption: 'Interactive installation, 2024'
+        },
+        {
+            id: generateId(),
+            type: 'skill',
+            skills: [
+                { name: 'After Effects', percent: 85 },
+                { name: 'Processing', percent: 70 },
+                { name: 'TouchDesigner', percent: 60 }
+            ],
+            barColor: '#7c3aed'
+        }
+    ];
+    setActiveTemplate('Creative');
+    selectedIndex = -1;
+    renderCanvas();
+    pushToHistory();
+    saveToStorage();
+    showToast('✨ Creative template loaded!');
 }
 
 function loadTechTemplate() {
-  components = [
-    {
-      id: generateId(),
-      type: 'header',
-      content: 'Sam Chen',
-      align: 'left',
-      color: '#0f172a',
-      fontSize: 40,
-      level: '1'
-    },
-    {
-      id: generateId(),
-      type: 'paragraph',
-      content: 'Full-stack developer · React · Node.js · Python',
-      align: 'left',
-      color: '#334155',
-      fontSize: 18
-    },
-    {
-      id: generateId(),
-      type: 'skill',
-      skills: [
-        { name: 'JavaScript', percent: 90 },
-        { name: 'React', percent: 85 },
-        { name: 'Node.js', percent: 80 },
-        { name: 'Python', percent: 75 }
-      ],
-      barColor: '#2563eb'
-    },
-    {
-      id: generateId(),
-      type: 'contact',
-      contacts: [
-        { type: 'github', value: 'github.com/samchen', icon: 'github' },
-        { type: 'linkedin', value: 'linkedin.com/in/samchen', icon: 'linkedin' },
-        { type: 'email', value: 'sam@example.com', icon: 'envelope' }
-      ]
-    }
-  ];
-  selectedIndex = -1;
-  renderCanvas();
-  pushToHistory();
-  saveToStorage();
-  showToast('Tech template loaded!');
+    components = [
+        {
+            id: generateId(),
+            type: 'header',
+            content: 'Sam Chen',
+            align: 'left',
+            color: '#0f172a',
+            fontSize: 40,
+            level: '1'
+        },
+        {
+            id: generateId(),
+            type: 'paragraph',
+            content: 'Full-stack developer · React · Node.js · Python',
+            align: 'left',
+            color: '#334155',
+            fontSize: 18
+        },
+        {
+            id: generateId(),
+            type: 'skill',
+            skills: [
+                { name: 'JavaScript', percent: 90 },
+                { name: 'React', percent: 85 },
+                { name: 'Node.js', percent: 80 },
+                { name: 'Python', percent: 75 }
+            ],
+            barColor: '#059669'
+        },
+        {
+            id: generateId(),
+            type: 'contact',
+            contacts: [
+                { type: 'github', value: 'github.com/samchen', icon: 'github' },
+                { type: 'linkedin', value: 'linkedin.com/in/samchen', icon: 'linkedin' },
+                { type: 'email', value: 'sam@example.com', icon: 'envelope' }
+            ]
+        }
+    ];
+    setActiveTemplate('Tech');
+    selectedIndex = -1;
+    renderCanvas();
+    pushToHistory();
+    saveToStorage();
+    showToast('💻 Tech template loaded!');
 }
 
 function loadBusinessTemplate() {
-  components = [
-    {
-      id: generateId(),
-      type: 'header',
-      content: 'Jordan Taylor',
-      align: 'left',
-      color: '#1e293b',
-      fontSize: 42,
-      level: '1'
-    },
-    {
-      id: generateId(),
-      type: 'paragraph',
-      content: 'Marketing professional · Brand strategist · Content creator',
-      align: 'left',
-      color: '#475569',
-      fontSize: 18
-    },
-    {
-      id: generateId(),
-      type: 'image',
-      content: 'https://picsum.photos/600/300?random=2',
-      caption: 'Social media campaign 2024'
-    },
-    {
-      id: generateId(),
-      type: 'paragraph',
-      content: '5+ years experience in digital marketing. Helped brands grow their online presence by 200%.',
-      align: 'left',
-      color: '#334155',
-      fontSize: 16
-    },
-    {
-      id: generateId(),
-      type: 'contact',
-      contacts: [
-        { type: 'linkedin', value: 'linkedin.com/in/jordantaylor', icon: 'linkedin' },
-        { type: 'email', value: 'jordan@example.com', icon: 'envelope' },
-        { type: 'twitter', value: 'twitter.com/jordan', icon: 'twitter' }
-      ]
-    }
-  ];
-  selectedIndex = -1;
-  renderCanvas();
-  pushToHistory();
-  saveToStorage();
-  showToast('Business template loaded!');
+    components = [
+        {
+            id: generateId(),
+            type: 'header',
+            content: 'Jordan Taylor',
+            align: 'left',
+            color: '#1e293b',
+            fontSize: 42,
+            level: '1'
+        },
+        {
+            id: generateId(),
+            type: 'paragraph',
+            content: 'Marketing professional · Brand strategist · Content creator',
+            align: 'left',
+            color: '#475569',
+            fontSize: 18
+        },
+        {
+            id: generateId(),
+            type: 'image',
+            content: 'https://picsum.photos/600/300?random=2',
+            caption: 'Social media campaign 2024'
+        },
+        {
+            id: generateId(),
+            type: 'paragraph',
+            content: '5+ years experience in digital marketing. Helped brands grow their online presence by 200%.',
+            align: 'left',
+            color: '#334155',
+            fontSize: 16
+        },
+        {
+            id: generateId(),
+            type: 'contact',
+            contacts: [
+                { type: 'linkedin', value: 'linkedin.com/in/jordantaylor', icon: 'linkedin' },
+                { type: 'email', value: 'jordan@example.com', icon: 'envelope' },
+                { type: 'twitter', value: 'twitter.com/jordan', icon: 'twitter' }
+            ]
+        }
+    ];
+    setActiveTemplate('Business');
+    selectedIndex = -1;
+    renderCanvas();
+    pushToHistory();
+    saveToStorage();
+    showToast('📊 Business template loaded!');
 }
+// ---------- TEMPLATE ACTIVE STATE ----------
+let currentTemplate = 'creative'; // Default template
 
-// ---------- DRAG AND DROP ----------
-function setupDragAndDrop() {
-  document.querySelectorAll('.component').forEach(comp => {
-    comp.addEventListener('dragstart', (e) => {
-      e.dataTransfer.setData('text/plain', comp.dataset.type);
-      e.dataTransfer.effectAllowed = 'copy';
+function setActiveTemplate(templateName) {
+    // Remove active class from all templates
+    document.querySelectorAll('.template-card').forEach(card => {
+        card.classList.remove('active');
     });
-  });
-
-  const canvas = document.getElementById('canvasContainer');
-  if (!canvas) return;
-
-  canvas.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-    canvas.classList.add('drag-over');
-  });
-
-  canvas.addEventListener('dragleave', () => {
-    canvas.classList.remove('drag-over');
-  });
-
-  canvas.addEventListener('drop', (e) => {
-    e.preventDefault();
-    canvas.classList.remove('drag-over');
-
-    const type = e.dataTransfer.getData('text/plain');
-    if (type) {
-      addComponent(type);
+    
+    // Add active class to selected template
+    const activeCard = document.getElementById(`template${templateName}`);
+    if (activeCard) {
+        activeCard.classList.add('active');
+        currentTemplate = templateName.toLowerCase();
     }
-  });
-
-  window.addEventListener('dragover', (e) => e.preventDefault());
-  window.addEventListener('drop', (e) => e.preventDefault());
+}
+// Update template functions to set active state
+// ---------- TEMPLATES WITH ACTIVE STATE ----------
+function loadCreativeTemplate() {
+    components = [
+        {
+            id: generateId(),
+            type: 'header',
+            content: 'Alex Rivera',
+            align: 'center',
+            color: '#7c3aed',
+            fontSize: 48,
+            level: '1'
+        },
+        {
+            id: generateId(),
+            type: 'paragraph',
+            content: 'Multimedia artist & creative coder',
+            align: 'center',
+            color: '#4b5563',
+            fontSize: 20
+        },
+        {
+            id: generateId(),
+            type: 'image',
+            content: 'https://picsum.photos/800/400?random=1',
+            caption: 'Interactive installation, 2024'
+        },
+        {
+            id: generateId(),
+            type: 'skill',
+            skills: [
+                { name: 'After Effects', percent: 85 },
+                { name: 'Processing', percent: 70 },
+                { name: 'TouchDesigner', percent: 60 }
+            ],
+            barColor: '#7c3aed'
+        }
+    ];
+    setActiveTemplate('Creative');
+    selectedIndex = -1;
+    renderCanvas();
+    pushToHistory();
+    saveToStorage();
+    showToast('✨ Creative template loaded!');
 }
 
+function loadTechTemplate() {
+    components = [
+        {
+            id: generateId(),
+            type: 'header',
+            content: 'Sam Chen',
+            align: 'left',
+            color: '#0f172a',
+            fontSize: 40,
+            level: '1'
+        },
+        {
+            id: generateId(),
+            type: 'paragraph',
+            content: 'Full-stack developer · React · Node.js · Python',
+            align: 'left',
+            color: '#334155',
+            fontSize: 18
+        },
+        {
+            id: generateId(),
+            type: 'skill',
+            skills: [
+                { name: 'JavaScript', percent: 90 },
+                { name: 'React', percent: 85 },
+                { name: 'Node.js', percent: 80 },
+                { name: 'Python', percent: 75 }
+            ],
+            barColor: '#059669'
+        },
+        {
+            id: generateId(),
+            type: 'contact',
+            contacts: [
+                { type: 'github', value: 'github.com/samchen', icon: 'github' },
+                { type: 'linkedin', value: 'linkedin.com/in/samchen', icon: 'linkedin' },
+                { type: 'email', value: 'sam@example.com', icon: 'envelope' }
+            ]
+        }
+    ];
+    setActiveTemplate('Tech');
+    selectedIndex = -1;
+    renderCanvas();
+    pushToHistory();
+    saveToStorage();
+    showToast('💻 Tech template loaded!');
+}
+
+function loadBusinessTemplate() {
+    components = [
+        {
+            id: generateId(),
+            type: 'header',
+            content: 'Jordan Taylor',
+            align: 'left',
+            color: '#1e293b',
+            fontSize: 42,
+            level: '1'
+        },
+        {
+            id: generateId(),
+            type: 'paragraph',
+            content: 'Marketing professional · Brand strategist · Content creator',
+            align: 'left',
+            color: '#475569',
+            fontSize: 18
+        },
+        {
+            id: generateId(),
+            type: 'image',
+            content: 'https://picsum.photos/600/300?random=2',
+            caption: 'Social media campaign 2024'
+        },
+        {
+            id: generateId(),
+            type: 'paragraph',
+            content: '5+ years experience in digital marketing. Helped brands grow their online presence by 200%.',
+            align: 'left',
+            color: '#334155',
+            fontSize: 16
+        },
+        {
+            id: generateId(),
+            type: 'contact',
+            contacts: [
+                { type: 'linkedin', value: 'linkedin.com/in/jordantaylor', icon: 'linkedin' },
+                { type: 'email', value: 'jordan@example.com', icon: 'envelope' },
+                { type: 'twitter', value: 'twitter.com/jordan', icon: 'twitter' }
+            ]
+        }
+    ];
+    setActiveTemplate('Business');
+    selectedIndex = -1;
+    renderCanvas();
+    pushToHistory();
+    saveToStorage();
+    showToast('📊 Business template loaded!');
+}
+
+// Initialize active template on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // ... your existing code ...
+    
+    // Set initial active template
+    setActiveTemplate('Creative');
+});
+// Set initial active template
+setTimeout(() => {
+    setActiveTemplate('Creative');
+}, 100);
+// ---------- DRAG AND DROP ----------
+// ---------- ADVANCED DRAG AND DROP (Position Based) ----------
+function setupDragAndDrop() {
+    document.querySelectorAll('.component').forEach(comp => {
+        comp.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', comp.dataset.type);
+            e.dataTransfer.effectAllowed = 'copy';
+        });
+    });
+
+    const canvas = document.getElementById('canvasContainer');
+    if (!canvas) return;
+
+    canvas.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+        canvas.classList.add('drag-over');
+    });
+
+    canvas.addEventListener('dragleave', () => {
+        canvas.classList.remove('drag-over');
+    });
+
+    canvas.addEventListener('drop', (e) => {
+        e.preventDefault();
+        canvas.classList.remove('drag-over');
+        
+        const type = e.dataTransfer.getData('text/plain');
+        if (!type) return;
+        
+        // Get drop coordinates relative to canvas
+        const canvasRect = canvas.getBoundingClientRect();
+        const dropY = e.clientY - canvasRect.top + canvas.scrollTop;
+        
+        // Find where to insert based on Y position
+        let insertIndex = components.length; // Default to end
+        
+        const canvasItems = document.querySelectorAll('.canvas-item');
+        for (let i = 0; i < canvasItems.length; i++) {
+            const item = canvasItems[i];
+            const itemRect = item.getBoundingClientRect();
+            const itemTop = itemRect.top - canvasRect.top + canvas.scrollTop;
+            const itemBottom = itemTop + itemRect.height;
+            
+            // If drop is above this item's middle, insert before it
+            if (dropY < itemTop + (itemRect.height / 2)) {
+                insertIndex = i;
+                break;
+            }
+        }
+        
+        // Add component at calculated index
+        addComponentAtPosition(type, insertIndex);
+    });
+
+    window.addEventListener('dragover', (e) => e.preventDefault());
+    window.addEventListener('drop', (e) => e.preventDefault());
+}
+
+// ---------- ADD COMPONENT AT SPECIFIC POSITION ----------
+function addComponentAtPosition(type, index) {
+    let newComponent = {
+        id: generateId(),
+        type: type,
+        align: 'left',
+        color: '#1e293b',
+        fontSize: 16
+    };
+    
+    switch(type) {
+        case 'header':
+            newComponent.content = 'Your Name or Title';
+            newComponent.level = '2';
+            newComponent.fontSize = 32;
+            break;
+            
+        case 'paragraph':
+            newComponent.content = 'Write something about yourself, your skills, or your projects.';
+            break;
+            
+        case 'image':
+            newComponent.content = 'https://picsum.photos/600/300?random=1';
+            newComponent.caption = 'Project screenshot';
+            break;
+            
+        case 'skill':
+            newComponent.skills = [
+                { name: 'HTML/CSS', percent: 80 },
+                { name: 'JavaScript', percent: 60 },
+                { name: 'Design', percent: 70 }
+            ];
+            newComponent.barColor = '#2563eb';
+            break;
+            
+        case 'contact':
+            newComponent.contacts = [
+                { type: 'email', value: 'student@example.com', icon: 'envelope' },
+                { type: 'linkedin', value: 'linkedin.com/in/student', icon: 'linkedin' },
+                { type: 'github', value: 'github.com/student', icon: 'github' }
+            ];
+            break;
+    }
+    
+    // Insert at specific position
+    components.splice(index, 0, newComponent);
+    selectedIndex = index;
+    pushToHistory();
+    renderCanvas();
+    saveToStorage();
+    
+    // Scroll to the new component
+    setTimeout(() => {
+        const newItem = document.querySelector(`.canvas-item[data-index="${index}"]`);
+        if (newItem) {
+            newItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 100);
+}
 // ---------- KEYBOARD SHORTCUTS ----------
 function setupKeyboardShortcuts() {
   document.addEventListener('keydown', (e) => {
@@ -1137,6 +1394,8 @@ document.getElementById('exportWithImagesBtn')?.addEventListener('click', () => 
   setupKeyboardShortcuts();
   setupPreviewToggles();
   setupAutoSave();
+  // Set initial active template
+setActiveTemplate('Creative');
 
   // Load saved portfolio or default template
   const saved = localStorage.getItem(STORAGE_KEY);
