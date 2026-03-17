@@ -140,18 +140,50 @@ function renderCanvas() {
 }
 
 // Click handler for canvas items - using event delegation
+// ---------- EVENT DELEGATION FOR BUTTONS ----------
 document.addEventListener('click', (e) => {
-  const canvasItem = e.target.closest('.canvas-item');
-  if (canvasItem && !e.target.closest('button')) {
-    const index = canvasItem.dataset.index;
-    if (index !== undefined) {
-      selectedIndex = parseInt(index);
-      renderCanvas(); // This will call showPropertyEditor
+    // Handle canvas item selection
+    const canvasItem = e.target.closest('.canvas-item');
+    if (canvasItem && !e.target.closest('button')) {
+        const index = canvasItem.dataset.index;
+        if (index !== undefined) {
+            console.log('Canvas item selected:', index);
+            selectedIndex = parseInt(index);
+            renderCanvas();
+        }
+        return;
     }
-    return;
-  }
+    
+    // Handle buttons
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    
+    console.log('Button clicked:', btn.className, 'Index:', btn.dataset.index);
+    
+    const index = btn.dataset.index;
+    if (index === undefined) return;
+    
+    if (btn.classList.contains('delete-btn')) {
+        console.log('Delete button clicked for index:', index);
+        deleteComponent(parseInt(index));
+        e.stopPropagation();
+    } 
+    else if (btn.classList.contains('duplicate-btn')) {
+        console.log('Duplicate button clicked for index:', index);
+        duplicateComponent(parseInt(index));
+        e.stopPropagation();
+    } 
+    else if (btn.classList.contains('move-up')) {
+        console.log('Move up button clicked for index:', index);
+        moveUp(parseInt(index));
+        e.stopPropagation();
+    } 
+    else if (btn.classList.contains('move-down')) {
+        console.log('Move down button clicked for index:', index);
+        moveDown(parseInt(index));
+        e.stopPropagation();
+    }
 });
-
 function getIconForType(type) {
   const icons = {
     'header': 'heading',
@@ -1091,9 +1123,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('undoBtn')?.addEventListener('click', undo);
   document.getElementById('redoBtn')?.addEventListener('click', redo);
 
-  // Export buttons
-  document.getElementById('exportHtmlBtn')?.addEventListener('click', () => exportAsHTML(false));
-  document.getElementById('exportWithImagesBtn')?.addEventListener('click', () => exportAsHTML(true));
+  // ---------- EXPORT BUTTONS ----------
+document.getElementById('exportHtmlBtn')?.addEventListener('click', () => exportAsHTML(false));
+document.getElementById('exportWithImagesBtn')?.addEventListener('click', () => exportAsHTML(true));
 
   // Template buttons
   document.getElementById('templateCreative')?.addEventListener('click', loadCreativeTemplate);

@@ -9,6 +9,189 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- Our CSS -->
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== RESPONSIVE HEADER STYLES ===== */
+
+.app-header {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Desktop Menu */
+.desktop-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Mobile Menu Toggle (Hidden on Desktop) */
+.mobile-menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #2563eb;
+  padding: 0.5rem;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100vh;
+  background: white;
+  box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+  transition: right 0.3s ease;
+  z-index: 2000;
+  flex-direction: column;
+}
+
+.mobile-menu.active {
+  right: 0;
+  display: flex;
+}
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.mobile-menu-header span {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 1.2rem;
+}
+
+.close-mobile-menu {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #64748b;
+  padding: 0.5rem;
+}
+
+.close-mobile-menu:hover {
+  color: #2563eb;
+}
+
+.mobile-menu-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.mobile-menu-content .history-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.mobile-menu-content .history-btn {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0.8rem;
+}
+
+.mobile-menu-content .toolbar {
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.mobile-menu-content .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .desktop-menu {
+    gap: 0.8rem;
+  }
+  
+  .toolbar {
+    gap: 0.3rem;
+  }
+  
+  .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .btn i {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none; /* Hide desktop menu on mobile */
+  }
+  
+  .mobile-menu-toggle {
+    display: block; /* Show hamburger on mobile */
+  }
+  
+  .app-header {
+    padding: 0.8rem 1rem;
+  }
+  
+  .logo h1 {
+    font-size: 1.2rem;
+  }
+  
+  .logo i {
+    font-size: 1.5rem;
+  }
+}
+
+/* Landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .mobile-menu {
+    width: 320px;
+  }
+  
+  .mobile-menu-content {
+    padding: 1rem;
+  }
+  
+  .mobile-menu-content .history-indicator {
+    flex-direction: row;
+  }
+  
+  .mobile-menu-content .toolbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .mobile-menu-content .btn {
+    width: auto;
+    flex: 1;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .logo h1 {
+    font-size: 1rem;
+  }
+  
+  .logo i {
+    font-size: 1.2rem;
+  }
+  
+  .mobile-menu {
+    width: 100%;
+  }
+}
+  </style>
 </head>
 
 <body>
@@ -18,7 +201,23 @@
       <h1>Portfolio Builder</h1>
     </div>
 
-    <div style="display: flex; align-items: center; gap: 1rem;">
+    <!-- Desktop Menu -->
+    <div class="desktop-menu">
+      <!-- Auto-save indicator -->
+      <div class="auto-save-indicator" id="autoSaveIndicator">
+        <span class="auto-save-dot"></span>
+        <span id="autoSaveText">Auto-saving</span>
+      </div>
+      <!-- Export Options (Moved to right panel) -->
+      <div class="export-options">
+        <!-- <h3><i class="fas fa-download"></i> Export</h3> -->
+        <button class="export-btn" id="exportHtmlBtn">
+          <i class="fas fa-file-code"></i> Export as HTML
+        </button>
+        <button class="export-btn" id="exportWithImagesBtn">
+          <i class="fas fa-images"></i> Export with Images
+        </button>
+      </div>
       <!-- History buttons -->
       <div class="history-indicator">
         <button class="history-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>
@@ -29,17 +228,57 @@
         </button>
       </div>
 
-      <!-- Auto-save indicator -->
-      <div class="auto-save-indicator" id="autoSaveIndicator">
-        <span class="auto-save-dot"></span>
-        <span id="autoSaveText">Auto-saving</span>
-      </div>
-
       <!-- Toolbar buttons -->
       <div class="toolbar">
         <button id="saveBtn" class="btn"><i class="fas fa-save"></i> Save</button>
         <button id="loadBtn" class="btn"><i class="fas fa-folder-open"></i> Load</button>
         <button id="clearBtn" class="btn"><i class="fas fa-trash-alt"></i> Clear</button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Button (Hamburger) -->
+    <div class="mobile-menu-toggle" id="mobileMenuToggle">
+      <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Mobile Menu (Hidden by default) -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-header">
+        <span>Menu</span>
+        <button class="close-mobile-menu" id="closeMobileMenu"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="mobile-menu-content">
+        <!-- Auto-save indicator -->
+        <div class="auto-save-indicator" id="autoSaveIndicatorMobile">
+          <span class="auto-save-dot"></span>
+          <span>Auto-saving</span>
+        </div>
+
+        <!-- History buttons -->
+        <div class="history-indicator">
+          <button class="history-btn" id="undoBtnMobile" title="Undo (Ctrl+Z)" disabled>
+            <i class="fas fa-undo-alt"></i> Undo
+          </button>
+          <button class="history-btn" id="redoBtnMobile" title="Redo (Ctrl+Y)" disabled>
+            <i class="fas fa-redo-alt"></i> Redo
+          </button>
+        </div>
+
+        <!-- Toolbar buttons -->
+        <div class="toolbar">
+          <button id="saveBtnMobile" class="btn"><i class="fas fa-save"></i> Save</button>
+          <button id="loadBtnMobile" class="btn"><i class="fas fa-folder-open"></i> Load</button>
+          <button id="clearBtnMobile" class="btn"><i class="fas fa-trash-alt"></i> Clear</button>
+          <!-- Export Options (Moved to right panel) -->
+      <div class="export-options">
+        <button class="export-btn" id="exportHtmlBtn">
+          <i class="fas fa-file-code"></i> Export as HTML
+        </button>
+        <button class="export-btn" id="exportWithImagesBtn">
+          <i class="fas fa-images"></i> Export with Images
+        </button>
+      </div>
+        </div>
       </div>
     </div>
   </header>
@@ -70,8 +309,25 @@
           <i class="fas fa-address-card"></i>
           <span>Contact Info</span>
         </div>
+        <p class="hint"><i class="fas fa-arrows-alt"></i> Drag components to canvas</p>
       </div>
-      <p class="hint"><i class="fas fa-arrows-alt"></i> Drag components to canvas</p>
+      
+      <!-- Template Gallery (Moved to left panel) -->
+      <div class="template-gallery">
+        <h3><i class="fas fa-palette"></i> Templates</h3>
+        <div class="template-card" id="templateCreative">
+          <h4>🎨 Creative</h4>
+          <p>For artists & designers</p>
+        </div>
+        <div class="template-card" id="templateTech">
+          <h4>💻 Tech</h4>
+          <p>For developers & engineers</p>
+        </div>
+        <div class="template-card" id="templateBusiness">
+          <h4>📊 Business</h4>
+          <p>For professionals</p>
+        </div>
+      </div>
     </aside>
 
     <!-- CENTER PANEL - Canvas -->
@@ -105,6 +361,8 @@
           <p class="small">Click on any item in canvas</p>
         </div>
       </div>
+      
+      
 
       <!-- Keyboard Shortcuts Hint -->
       <div class="shortcuts-hint">
@@ -115,42 +373,125 @@
         <p><kbd>Ctrl</kbd> + <kbd>Y</kbd> Redo</p>
         <p><kbd>↑</kbd> <kbd>↓</kbd> Move up/down</p>
       </div>
-
-      <!-- Export Options -->
-      <div class="export-options">
-        <h3 style="margin-top:1rem;"><i class="fas fa-download"></i> Export</h3>
-        <button class="export-btn" id="exportHtmlBtn">
-          <i class="fas fa-file-code"></i> Export as HTML
-        </button>
-        <button class="export-btn" id="exportWithImagesBtn">
-          <i class="fas fa-images"></i> Export with Images
-        </button>
-      </div>
-
-      <!-- Template Gallery -->
-      <div class="template-gallery">
-        <h3><i class="fas fa-palette"></i> Templates</h3>
-        <div class="template-card" id="templateCreative">
-          <h4>🎨 Creative</h4>
-          <p>For artists & designers</p>
-        </div>
-        <div class="template-card" id="templateTech">
-          <h4>💻 Tech</h4>
-          <p>For developers & engineers</p>
-        </div>
-        <div class="template-card" id="templateBusiness">
-          <h4>📊 Business</h4>
-          <p>For professionals</p>
-        </div>
-      </div>
     </aside>
   </main>
 
-  <footer>
-    <p>Day 3: Drag & Drop + Properties + Export + Image Upload</p>
-  </footer>
+  <footer class="app-footer">
+  <div class="footer-content">
+    <!-- Left Section - Shortcuts -->
+    <div class="footer-section shortcuts-section">
+      <h4><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h4>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item">
+          <span class="shortcut-key"><kbd>Del</kbd></span>
+          <span class="shortcut-desc">Delete selected</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>D</kbd></span>
+          <span class="shortcut-desc">Duplicate</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Z</kbd></span>
+          <span class="shortcut-desc">Undo</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Y</kbd></span>
+          <span class="shortcut-desc">Redo</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key"><kbd>↑</kbd> <kbd>↓</kbd></span>
+          <span class="shortcut-desc">Move up/down</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>S</kbd></span>
+          <span class="shortcut-desc">Save</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle Section - Info -->
+    <div class="footer-section info-section">
+      <h4><i class="fas fa-cubes"></i> Portfolio Builder</h4>
+      <p>Create stunning portfolios with drag & drop</p>
+    </div>
+
+    <!-- Right Section - Credits -->
+    <div class="footer-section credits-section">
+      <h4><i class="fas fa-heart"></i> Made with</h4>
+      <p>by <strong>MUBASSHIR ALI</strong></p>
+      <p class="day-info">Complete Portfolio Builder</p>
+     <div class="social-links">
+    <a href="https://github.com/MUBASSHIRALI0710" class="social-link" title="GitHub" target="_blank">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://linkedin.com/in/your-profile" class="social-link" title="LinkedIn" target="_blank">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="mailto:mubasshirali0710@gmail.com?subject=Portfolio%20Builder%20Feedback" class="social-link" title="Email Me">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </div>
+    </div>
+  </div>
+
+  <!-- Copyright Bar -->
+  <div class="footer-bottom">
+    <p>&copy; 2024 Portfolio Builder. All rights reserved. | Built with <i class="fas fa-heart" style="color: #ef4444;"></i> for students</p>
+  </div>
+</footer>
 
   <script src="script.js"></script>
+  
+  <!-- Mobile Menu JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileToggle = document.getElementById('mobileMenuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeMobileMenu = document.getElementById('closeMobileMenu');
+      
+      if (mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener('click', function() {
+          mobileMenu.classList.add('active');
+        });
+      }
+      
+      if (closeMobileMenu && mobileMenu) {
+        closeMobileMenu.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+        });
+      }
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(e) {
+        if (mobileMenu && mobileMenu.classList.contains('active') && 
+            !mobileMenu.contains(e.target) && 
+            !mobileToggle.contains(e.target)) {
+          mobileMenu.classList.remove('active');
+        }
+      });
+      
+      // Sync mobile buttons with desktop buttons
+      const syncButtons = [
+        { desktop: 'undoBtn', mobile: 'undoBtnMobile' },
+        { desktop: 'redoBtn', mobile: 'redoBtnMobile' },
+        { desktop: 'saveBtn', mobile: 'saveBtnMobile' },
+        { desktop: 'loadBtn', mobile: 'loadBtnMobile' },
+        { desktop: 'clearBtn', mobile: 'clearBtnMobile' }
+      ];
+      
+      syncButtons.forEach(pair => {
+        const desktopBtn = document.getElementById(pair.desktop);
+        const mobileBtn = document.getElementById(pair.mobile);
+        
+        if (desktopBtn && mobileBtn) {
+          mobileBtn.addEventListener('click', function(e) {
+            desktopBtn.click();
+            mobileMenu.classList.remove('active');
+          });
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
