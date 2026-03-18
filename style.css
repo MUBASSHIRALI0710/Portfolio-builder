@@ -535,7 +535,7 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.8rem;
-  margin: 0 1rem 1rem 1rem;
+  /* margin: 0 1rem 1rem 1rem; */
 }
 
 .template-card {
@@ -1057,7 +1057,8 @@ body {
 
   .panel {
     height: auto;
-    max-height: 300px;
+    max-height: 600px;
+    overflow-y: scroll;
   }
 }
 
@@ -1265,3 +1266,9 @@ textarea:focus-visible {
     }
 }
 
+/* Mobile Scroll Fix */
+@media (max-width: 768px) {
+    .left-panel .components-list { max-height: 600px; overflow-y: auto; }
+    .left-panel .template-gallery { max-height: 200px; overflow-y: auto; padding: 1rem; }
+    #canvasContainer { max-height: 400px; overflow-y: auto; }
+}
